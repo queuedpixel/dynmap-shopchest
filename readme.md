@@ -1,4 +1,4 @@
-# dynmap-shopchest
+# Dynmap Shopchest
 
 Display ShopChest Shops on Dynmap
 
