@@ -23,3 +23,5 @@
 name: DynmapShopchest
 version: 1.0.0-SNAPSHOT
 main: com.queuedpixel.dynmapshopchest.DynmapShopchestPlugin
+depend:
+    - ShopChest

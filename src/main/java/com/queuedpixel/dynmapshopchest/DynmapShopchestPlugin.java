@@ -26,16 +26,35 @@ SOFTWARE.
 
 package com.queuedpixel.dynmapshopchest;
 
+import de.epiceric.shopchest.ShopChest;
+import de.epiceric.shopchest.event.ShopInitializedEvent;
+import de.epiceric.shopchest.shop.Shop;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class DynmapShopchestPlugin extends JavaPlugin
+public class DynmapShopchestPlugin extends JavaPlugin implements Listener
 {
+    private ShopChest shopChest;
+
     public void onEnable()
     {
-        this.getLogger().info( "Hello, world!" );
+        this.shopChest = (ShopChest) this.getServer().getPluginManager().getPlugin( "ShopChest" );
+        this.getServer().getPluginManager().registerEvents( this, this );
     }
 
     public void onDisable()
     {
+    }
+
+    @EventHandler
+    public void onShopInitializedEvent( ShopInitializedEvent event )
+    {
+        for ( Shop shop : this.shopChest.getShopUtils().getShops() )
+        {
+            this.getLogger().info( "Shop - x: " + shop.getLocation().getBlockX() +
+                    ", y: " + shop.getLocation().getBlockY() +
+                    ", z: " + shop.getLocation().getBlockZ() );
+        }
     }
 }
