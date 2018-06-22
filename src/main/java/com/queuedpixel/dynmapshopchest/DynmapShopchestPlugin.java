@@ -26,10 +26,16 @@ SOFTWARE.
 
 package com.queuedpixel.dynmapshopchest;
 
-public class Main
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class DynmapShopchestPlugin extends JavaPlugin
 {
-    public static void main( String[] args )
+    public void onEnable()
     {
-        System.out.println( "Hello, world!" );
+        this.getLogger().info( "Hello, world!" );
+    }
+
+    public void onDisable()
+    {
     }
 }
