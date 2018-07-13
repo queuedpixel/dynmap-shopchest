@@ -29,13 +29,18 @@ package com.queuedpixel.dynmapshopchest;
 import de.epiceric.shopchest.ShopChest;
 import de.epiceric.shopchest.event.ShopInitializedEvent;
 import de.epiceric.shopchest.shop.Shop;
+import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class DynmapShopchestPlugin extends JavaPlugin implements Listener
 {
     private ShopChest shopChest;
+    private Set< Location > locations = new HashSet<>();
 
     public void onEnable()
     {
@@ -52,12 +57,16 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
     {
         for ( Shop shop : this.shopChest.getShopUtils().getShops() )
         {
-            this.getLogger().info(
-                    "Shop " +
-                    "- world: " + shop.getLocation().getWorld().getName() +
-                    ", x: "     + shop.getLocation().getBlockX() +
-                    ", y: "     + shop.getLocation().getBlockY() +
-                    ", z: "     + shop.getLocation().getBlockZ() );
+            if ( !this.locations.contains( shop.getLocation() ))
+            {
+                this.locations.add( shop.getLocation() );
+                this.getLogger().info(
+                        "Shop " +
+                        "- world: " + shop.getLocation().getWorld().getName() +
+                        ", x: "     + shop.getLocation().getBlockX() +
+                        ", y: "     + shop.getLocation().getBlockY() +
+                        ", z: "     + shop.getLocation().getBlockZ() );
+            }
         }
     }
 }
