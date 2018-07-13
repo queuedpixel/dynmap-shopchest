@@ -37,13 +37,16 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 public class DynmapShopchestPlugin extends JavaPlugin implements Listener
 {
     private ShopChest shopChest;
     private Set< Location > locations = new HashSet<>();
+    private Collection< ShopRegion > shopRegions = new LinkedList<>();
 
     public void onEnable()
     {
@@ -63,6 +66,7 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
             if ( !this.locations.contains( shop.getLocation() ))
             {
                 this.locations.add( shop.getLocation() );
+
                 String enchantments =
                         LanguageUtils.getEnchantmentString( ItemUtils.getEnchantments( shop.getProduct()) );
                 int inventory = Utils.getAmount( shop.getInventoryHolder().getInventory(), shop.getProduct() );
@@ -82,7 +86,46 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
                         ", sell price: "   + shop.getSellPrice() +
                         ", inventory: "    + inventory +
                         ", free space: "   + freeSpace );
+
+                ShopRegion shopRegion = this.getShopRegion( shop );
+                shopRegion.count++;
             }
         }
+
+        this.getLogger().info( "Regions:" );
+
+        for ( ShopRegion shopRegion : this.shopRegions )
+        {
+            this.getLogger().info(
+                    "Shop Region " +
+                    "- world: "    + shopRegion.world +
+                    ", xLeft: "    + shopRegion.xLeft +
+                    ", zTop: "     + shopRegion.zTop +
+                    ", xRight: "   + shopRegion.xRight +
+                    ", zBottom: "  + shopRegion.zBottom +
+                    ", count: "    + shopRegion.count );
+        }
+    }
+
+    private ShopRegion getShopRegion( Shop shop )
+    {
+        for ( ShopRegion shopRegion : this.shopRegions )
+        {
+            if (( shopRegion.world.equals( shop.getLocation().getWorld().getName() )) &&
+                ( shopRegion.xLeft   <= shop.getLocation().getBlockX() ) &&
+                ( shopRegion.xRight  >= shop.getLocation().getBlockX() ) &&
+                ( shopRegion.zBottom <= shop.getLocation().getBlockZ() ) &&
+                ( shopRegion.zTop    >= shop.getLocation().getBlockZ() ))
+            {
+                return shopRegion;
+            }
+        }
+
+        String shopWorld = shop.getLocation().getWorld().getName();
+        int shopX = shop.getLocation().getBlockX();
+        int shopZ = shop.getLocation().getBlockZ();
+        ShopRegion shopRegion = new ShopRegion( shopWorld, shopX, shopZ, shopX, shopZ );
+        this.shopRegions.add( shopRegion );
+        return shopRegion;
     }
 }
