@@ -52,9 +52,12 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
     {
         for ( Shop shop : this.shopChest.getShopUtils().getShops() )
         {
-            this.getLogger().info( "Shop - x: " + shop.getLocation().getBlockX() +
-                    ", y: " + shop.getLocation().getBlockY() +
-                    ", z: " + shop.getLocation().getBlockZ() );
+            this.getLogger().info(
+                    "Shop " +
+                    "- world: " + shop.getLocation().getWorld().getName() +
+                    ", x: "     + shop.getLocation().getBlockX() +
+                    ", y: "     + shop.getLocation().getBlockY() +
+                    ", z: "     + shop.getLocation().getBlockZ() );
         }
     }
 }
