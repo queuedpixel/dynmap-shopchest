@@ -44,7 +44,6 @@ import java.util.Set;
 
 public class DynmapShopchestPlugin extends JavaPlugin implements Listener
 {
-    private final int regionPadding = 5; // padding between region border and shops; blocks
     private ShopChest shopChest;
     private Set< Location > locations = new HashSet<>();
     private Collection< ShopRegion > shopRegions = new LinkedList<>();
@@ -89,7 +88,7 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
                         ", free space: "   + freeSpace );
 
                 ShopRegion shopRegion = this.getShopRegion( shop );
-                shopRegion.count++;
+                shopRegion.addShop( shop );
             }
         }
 
@@ -104,7 +103,7 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
                     ", zTop: "     + shopRegion.zTop +
                     ", xRight: "   + shopRegion.xRight +
                     ", zBottom: "  + shopRegion.zBottom +
-                    ", count: "    + shopRegion.count );
+                    ", count: "    + shopRegion.shops.size() );
         }
     }
 
@@ -122,13 +121,7 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
             }
         }
 
-        String shopWorld = shop.getLocation().getWorld().getName();
-        int shopX = shop.getLocation().getBlockX();
-        int shopZ = shop.getLocation().getBlockZ();
-        ShopRegion shopRegion = new ShopRegion(
-                shopWorld,
-                shopX - this.regionPadding, shopZ - this.regionPadding,
-                shopX + this.regionPadding, shopZ + this.regionPadding );
+        ShopRegion shopRegion = new ShopRegion();
         this.shopRegions.add( shopRegion );
         return shopRegion;
     }

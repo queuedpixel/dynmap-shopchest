@@ -26,22 +26,63 @@ SOFTWARE.
 
 package com.queuedpixel.dynmapshopchest;
 
+import de.epiceric.shopchest.shop.Shop;
+import org.bukkit.Location;
+
+import java.util.Collection;
+import java.util.LinkedList;
+
 public class ShopRegion
 {
+    private static final int regionPadding = 5; // padding between region border and shops; blocks
+
     String world;
     int xLeft;
     int zTop;
     int xRight;
     int zBottom;
-    int count;
+    Collection< Shop > shops = new LinkedList<>();
 
-    ShopRegion( String world, int xLeft, int zTop, int xRight, int zBottom )
+    void addShop( Shop shop )
     {
+        this.shops.add( shop );
+        this.resize();
+    }
+
+    private void resize()
+    {
+        // don't resize if there are no shops
+        if ( this.shops.size() < 1 ) return;
+
+        // get the smallest and largest x and z coordinates from all shops
+        String world = null;
+        int xMin = Integer.MAX_VALUE;
+        int zMin = Integer.MAX_VALUE;
+        int xMax = Integer.MIN_VALUE;
+        int zMax = Integer.MIN_VALUE;
+        for ( Shop shop : this.shops )
+        {
+            Location location = shop.getLocation();
+
+            // verify that all shops are in the same world
+            if ( world == null ) world = location.getWorld().getName();
+            else if ( !world.equals( location.getWorld().getName() ))
+            {
+                throw new IllegalStateException( "Not all shops in same world." );
+            }
+
+            // update our min and max values
+            if ( location.getBlockX() < xMin ) xMin = location.getBlockX();
+            if ( location.getBlockZ() < zMin ) zMin = location.getBlockZ();
+            if ( location.getBlockX() > xMax ) xMax = location.getBlockX();
+            if ( location.getBlockZ() > zMax ) zMax = location.getBlockZ();
+        }
+
+        // update region size
         this.world   = world;
-        this.xLeft   = xLeft;
-        this.zTop    = zTop;
-        this.xRight  = xRight;
-        this.zBottom = zBottom;
-        this.count   = 0;
+        this.xLeft   = xMin - ShopRegion.regionPadding;
+        this.zTop    = zMin - ShopRegion.regionPadding;
+        this.xRight  = xMax + ShopRegion.regionPadding;
+        this.zBottom = zMax + ShopRegion.regionPadding;
     }
 }
