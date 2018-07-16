@@ -36,14 +36,20 @@ import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.dynmap.DynmapCommonAPI;
+import org.dynmap.markers.AreaMarker;
+import org.dynmap.markers.MarkerAPI;
+import org.dynmap.markers.MarkerSet;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
+import java.util.UUID;
 
 public class DynmapShopchestPlugin extends JavaPlugin implements Listener
 {
+    private MarkerSet markerSet;
     private ShopChest shopChest;
     private Set< Location > locations = new HashSet<>();
     private Collection< ShopRegion > shopRegions = new LinkedList<>();
@@ -52,6 +58,10 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
     {
         this.shopChest = (ShopChest) this.getServer().getPluginManager().getPlugin( "ShopChest" );
         this.getServer().getPluginManager().registerEvents( this, this );
+        DynmapCommonAPI dynmapApi = (DynmapCommonAPI) this.getServer().getPluginManager().getPlugin( "dynmap" );
+        MarkerAPI markerApi = dynmapApi.getMarkerAPI();
+        this.markerSet = markerApi.createMarkerSet( "ShopChest", "ShopChest", null, false );
+        this.markerSet.setLayerPriority( 10 );
     }
 
     public void onDisable()
@@ -105,6 +115,13 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
                     ", xRight: "   + shopRegion.xRight +
                     ", zBottom: "  + shopRegion.zBottom +
                     ", count: "    + shopRegion.shops.size() );
+
+            AreaMarker area = this.markerSet.createAreaMarker(
+                    UUID.randomUUID().toString(), "Shop Region", false, shopRegion.world,
+                    new double[] { shopRegion.xLeft, shopRegion.xLeft, shopRegion.xRight, shopRegion.xRight },
+                    new double[] { shopRegion.zTop, shopRegion.zBottom, shopRegion.zBottom, shopRegion.zTop }, false );
+            area.setLineStyle( 3, 0.75, 0x00FFFF );
+            area.setFillStyle( 0.25, 0x00FFFF );
         }
     }
 

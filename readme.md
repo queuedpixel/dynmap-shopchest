@@ -10,6 +10,7 @@ This plugin is under development and is not ready for use.
 
 This plugin depends on the following plugins:
 
+* [Dynmap](https://www.spigotmc.org/resources/dynmap.274/)
 * [ShopChest](https://www.spigotmc.org/resources/shopchest.11431/)
 
 ## Installation
