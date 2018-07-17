@@ -107,6 +107,65 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
 
         for ( ShopRegion shopRegion : this.shopRegions )
         {
+            StringBuilder builder = new StringBuilder();
+            builder.append( "<table>" );
+            builder.append( "<tr>" );
+            builder.append( "<th>" );
+            builder.append( "Item" );
+            builder.append( "</th>" );
+            builder.append( "<th>" );
+            builder.append( "Amount" );
+            builder.append( "</th>" );
+            builder.append( "<th>" );
+            builder.append( "Buy Price" );
+            builder.append( "</th>" );
+            builder.append( "<th>" );
+            builder.append( "Inventory" );
+            builder.append( "</th>" );
+            builder.append( "<th>" );
+            builder.append( "Sell Price" );
+            builder.append( "</th>" );
+            builder.append( "<th>" );
+            builder.append( "Free Space" );
+            builder.append( "</th>" );
+            builder.append( "</tr>" );
+
+            for ( Shop shop : shopRegion.shops )
+            {
+                String buyPrice = shop.getBuyPrice() == 0 ? "N/A" : Double.toString( shop.getBuyPrice() );
+                String sellPrice = shop.getSellPrice() == 0 ? "N/A" : Double.toString( shop.getSellPrice() );
+                String inventory = shop.getBuyPrice() == 0 ? "N/A" :
+                        Integer.toString(
+                                Utils.getAmount( shop.getInventoryHolder().getInventory(), shop.getProduct() ));
+                String freeSpace = shop.getSellPrice() == 0 ? "N/A" :
+                        Integer.toString(
+                                Utils.getFreeSpaceForItem(
+                                        shop.getInventoryHolder().getInventory(), shop.getProduct() ));
+
+                builder.append( "<tr>" );
+                builder.append( "<td>" );
+                builder.append( LanguageUtils.getItemName( shop.getProduct() ));
+                builder.append( "</td>" );
+                builder.append( "<td>" );
+                builder.append( shop.getProduct().getAmount() );
+                builder.append( "</td>" );
+                builder.append( "<td>" );
+                builder.append( buyPrice );
+                builder.append( "</td>" );
+                builder.append( "<td>" );
+                builder.append( inventory );
+                builder.append( "</td>" );
+                builder.append( "<td>" );
+                builder.append( sellPrice );
+                builder.append( "</td>" );
+                builder.append( "<td>" );
+                builder.append( freeSpace );
+                builder.append( "</td>" );
+                builder.append( "</tr>" );
+            }
+
+            builder.append( "</table>" );
+
             this.getLogger().info(
                     "Shop Region " +
                     "- world: "    + shopRegion.world +
@@ -117,7 +176,7 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
                     ", count: "    + shopRegion.shops.size() );
 
             AreaMarker area = this.markerSet.createAreaMarker(
-                    UUID.randomUUID().toString(), "Shop Region", false, shopRegion.world,
+                    UUID.randomUUID().toString(), builder.toString(), true, shopRegion.world,
                     new double[] { shopRegion.xLeft, shopRegion.xLeft, shopRegion.xRight, shopRegion.xRight },
                     new double[] { shopRegion.zTop, shopRegion.zBottom, shopRegion.zBottom, shopRegion.zTop }, false );
             area.setLineStyle( 3, 0.75, 0x00FFFF );
