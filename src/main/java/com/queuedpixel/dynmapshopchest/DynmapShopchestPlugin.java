@@ -37,6 +37,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.dynmap.DynmapCommonAPI;
@@ -63,7 +64,7 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
         RegisteredServiceProvider< Economy > rsp =
                         Bukkit.getServer().getServicesManager().getRegistration( Economy.class );
         Economy economy = rsp.getProvider();
-        this.formatString = "%." + economy.fractionalDigits() + "f";
+        this.formatString = "%,." + economy.fractionalDigits() + "f";
 
         this.shopChest = (ShopChest) this.getServer().getPluginManager().getPlugin( "ShopChest" );
         this.getServer().getPluginManager().registerEvents( this, this );
@@ -142,17 +143,15 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
 
             for ( Shop shop : shopRegion.shops )
             {
+                Inventory inventory = shop.getInventoryHolder().getInventory();
                 String buyPrice =
                         shop.getBuyPrice() == 0 ? "N/A" : String.format( this.formatString, shop.getBuyPrice() );
                 String sellPrice =
                         shop.getSellPrice() == 0 ? "N/A" : String.format( this.formatString, shop.getSellPrice() );
-                String inventory = shop.getBuyPrice() == 0 ? "N/A" :
-                        Integer.toString(
-                                Utils.getAmount( shop.getInventoryHolder().getInventory(), shop.getProduct() ));
-                String freeSpace = shop.getSellPrice() == 0 ? "N/A" :
-                        Integer.toString(
-                                Utils.getFreeSpaceForItem(
-                                        shop.getInventoryHolder().getInventory(), shop.getProduct() ));
+                String inventoryCount = shop.getBuyPrice() == 0 ? "N/A" :
+                        String.format( "%,d", Utils.getAmount( inventory, shop.getProduct() ));
+                String freeSpaceCount = shop.getSellPrice() == 0 ? "N/A" :
+                        String.format( "%,d", Utils.getFreeSpaceForItem( inventory, shop.getProduct() ));
 
                 builder.append( "<tr>" );
                 builder.append( "<td>" );
@@ -165,13 +164,13 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
                 builder.append( buyPrice );
                 builder.append( "</td>" );
                 builder.append( "<td>" );
-                builder.append( inventory );
+                builder.append( inventoryCount );
                 builder.append( "</td>" );
                 builder.append( "<td>" );
                 builder.append( sellPrice );
                 builder.append( "</td>" );
                 builder.append( "<td>" );
-                builder.append( freeSpace );
+                builder.append( freeSpaceCount );
                 builder.append( "</td>" );
                 builder.append( "</tr>" );
             }
