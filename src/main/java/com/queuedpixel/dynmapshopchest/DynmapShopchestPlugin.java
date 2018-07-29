@@ -125,19 +125,19 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
             builder.append( "Item" );
             builder.append( "</th>" );
             builder.append( "<th>" );
-            builder.append( "Amount" );
+            builder.append( "Amt." );
             builder.append( "</th>" );
             builder.append( "<th>" );
-            builder.append( "Buy Price" );
+            builder.append( "Buy" );
             builder.append( "</th>" );
             builder.append( "<th>" );
-            builder.append( "Inventory" );
+            builder.append( "#" );
             builder.append( "</th>" );
             builder.append( "<th>" );
-            builder.append( "Sell Price" );
+            builder.append( "Sell" );
             builder.append( "</th>" );
             builder.append( "<th>" );
-            builder.append( "Free Space" );
+            builder.append( "#" );
             builder.append( "</th>" );
             builder.append( "</tr>" );
 
