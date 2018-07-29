@@ -121,10 +121,10 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
             StringBuilder builder = new StringBuilder();
             builder.append( "<table style=\"border-collapse: collapse;\">" );
             builder.append( "<tr style=\"background-color: #FFFFFF; text-align: center;\">" );
-            builder.append( "<th style=\"text-align: left;\">" );
+            builder.append( "<th style=\"border-right: 1px solid black; text-align: left;\">" );
             builder.append( "Item" );
             builder.append( "</th>" );
-            builder.append( "<th style=\"border-right: 1px solid black; text-align: right;\">" );
+            builder.append( "<th style=\"border-right: 1px solid black;\">" );
             builder.append( "Amt." );
             builder.append( "</th>" );
             builder.append( "<th style=\"border-right: 1px solid black;\">" );
@@ -158,19 +158,19 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
                         String.format( "%,d", Utils.getFreeSpaceForItem( inventory, shop.getProduct() ));
 
                 builder.append( "<tr style=\"background-color: " + bgColor+ ";\">" );
-                builder.append( "<td>" );
+                builder.append( "<td style=\"border-right: 1px solid black; text-align: right; padding-right: 3px;\">" );
                 builder.append( LanguageUtils.getItemName( shop.getProduct() ));
                 builder.append( "</td>" );
-                builder.append( "<td style=\"border-right: 1px solid black; text-align: right; padding-right: 3px;\">" );
+                builder.append( "<td style=\"border-right: 1px solid black; text-align: right; padding-left: 3px; padding-right: 3px;\">" );
                 builder.append( shop.getProduct().getAmount() );
                 builder.append( "</td>" );
-                builder.append( "<td style=\"border-right: 1px solid black;text-align: right; padding-left: 3px; padding-right: 3px;\">" );
+                builder.append( "<td style=\"border-right: 1px solid black; text-align: right; padding-left: 3px; padding-right: 3px;\">" );
                 builder.append( buyPrice );
                 builder.append( "</td>" );
-                builder.append( "<td style=\"border-right: 1px solid black;text-align: right; padding-left: 3px; padding-right: 3px;\">" );
+                builder.append( "<td style=\"border-right: 1px solid black; text-align: right; padding-left: 3px; padding-right: 3px;\">" );
                 builder.append( inventoryCount );
                 builder.append( "</td>" );
-                builder.append( "<td style=\"border-right: 1px solid black;text-align: right; padding-left: 3px; padding-right: 3px;\">" );
+                builder.append( "<td style=\"border-right: 1px solid black; text-align: right; padding-left: 3px; padding-right: 3px;\">" );
                 builder.append( sellPrice );
                 builder.append( "</td>" );
                 builder.append( "<td style=\"text-align: right; padding-left: 3px;\">" );
