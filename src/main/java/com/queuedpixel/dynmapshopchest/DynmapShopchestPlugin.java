@@ -120,7 +120,7 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
         {
             StringBuilder builder = new StringBuilder();
             builder.append( "<table>" );
-            builder.append( "<tr>" );
+            builder.append( "<tr style=\"text-align: center;\">" );
             builder.append( "<th>" );
             builder.append( "Item" );
             builder.append( "</th>" );
