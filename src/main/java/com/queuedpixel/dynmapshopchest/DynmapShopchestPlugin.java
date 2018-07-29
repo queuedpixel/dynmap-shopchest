@@ -208,60 +208,68 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
     {
         Collection< ShopRegion > overlappingShopRegions = new LinkedList<>();
 
-        for ( ShopRegion otherShopRegion : this.shopRegions )
+        do
         {
-            // don't check for an overlap with the same region
-            if ( otherShopRegion == shopRegion ) continue;
+            overlappingShopRegions.clear();
 
-            boolean xOverlap =
-                    // left X of other region is inside this region
-                    ((( shopRegion.xLeft  <= otherShopRegion.xLeft  ) &&
-                      ( shopRegion.xRight >= otherShopRegion.xLeft  )) ||
-
-                     // right X of other region is inside this region
-                     (( shopRegion.xLeft  <= otherShopRegion.xRight ) &&
-                      ( shopRegion.xRight >= otherShopRegion.xRight )) ||
-
-                     // both left and right X of this region are inside other region
-                     (( otherShopRegion.xLeft  <= shopRegion.xLeft  ) &&
-                      ( otherShopRegion.xRight >= shopRegion.xLeft  ) &&
-                      ( otherShopRegion.xLeft  <= shopRegion.xRight ) &&
-                      ( otherShopRegion.xRight >= shopRegion.xRight )));
-
-            boolean zOverlap =
-                    // top Z of other region is inside this region
-                    ((( shopRegion.zTop    <= otherShopRegion.zTop    ) &&
-                      ( shopRegion.zBottom >= otherShopRegion.zTop    )) ||
-
-                     // bottom Z of other region is inside this region
-                     (( shopRegion.zTop    <= otherShopRegion.zBottom ) &&
-                      ( shopRegion.zBottom >= otherShopRegion.zBottom )) ||
-
-                     // both top and bottom Z of this region are inside other region
-                     (( otherShopRegion.zTop    <= shopRegion.zTop    ) &&
-                      ( otherShopRegion.zBottom >= shopRegion.zTop    ) &&
-                      ( otherShopRegion.zTop    <= shopRegion.zBottom ) &&
-                      ( otherShopRegion.zBottom >= shopRegion.zBottom )));
-
-            // two regions overlap only if they overlap in the both the X and the Z dimension, and are in the same world
-            if (( xOverlap ) && ( zOverlap ) && ( shopRegion.world.equals( otherShopRegion.world )))
+            // check for overlapping regions
+            for ( ShopRegion otherShopRegion : this.shopRegions )
             {
-                overlappingShopRegions.add( otherShopRegion );
+                // don't check for an overlap with the same region
+                if ( otherShopRegion == shopRegion ) continue;
+
+                boolean xOverlap =
+                        // left X of other region is inside this region
+                        ((( shopRegion.xLeft  <= otherShopRegion.xLeft  ) &&
+                          ( shopRegion.xRight >= otherShopRegion.xLeft  )) ||
+
+                         // right X of other region is inside this region
+                         (( shopRegion.xLeft  <= otherShopRegion.xRight ) &&
+                          ( shopRegion.xRight >= otherShopRegion.xRight )) ||
+
+                         // both left and right X of this region are inside other region
+                         (( otherShopRegion.xLeft  <= shopRegion.xLeft  ) &&
+                          ( otherShopRegion.xRight >= shopRegion.xLeft  ) &&
+                          ( otherShopRegion.xLeft  <= shopRegion.xRight ) &&
+                          ( otherShopRegion.xRight >= shopRegion.xRight )));
+
+                boolean zOverlap =
+                        // top Z of other region is inside this region
+                        ((( shopRegion.zTop    <= otherShopRegion.zTop    ) &&
+                          ( shopRegion.zBottom >= otherShopRegion.zTop    )) ||
+
+                         // bottom Z of other region is inside this region
+                         (( shopRegion.zTop    <= otherShopRegion.zBottom ) &&
+                          ( shopRegion.zBottom >= otherShopRegion.zBottom )) ||
+
+                         // both top and bottom Z of this region are inside other region
+                         (( otherShopRegion.zTop    <= shopRegion.zTop    ) &&
+                          ( otherShopRegion.zBottom >= shopRegion.zTop    ) &&
+                          ( otherShopRegion.zTop    <= shopRegion.zBottom ) &&
+                          ( otherShopRegion.zBottom >= shopRegion.zBottom )));
+
+                // two regions overlap if they overlap in the both the X and the Z dimension, and are in the same world
+                if (( xOverlap ) && ( zOverlap ) && ( shopRegion.world.equals( otherShopRegion.world )))
+                {
+                    overlappingShopRegions.add( otherShopRegion );
+                }
             }
-        }
 
-        // merge and remove overlapping regions
-        for ( ShopRegion overlappingShopRegion : overlappingShopRegions )
-        {
-            this.shopRegions.remove( overlappingShopRegion );
-
-            for ( Shop shop : overlappingShopRegion.shops )
+            // merge and remove overlapping regions
+            for ( ShopRegion overlappingShopRegion : overlappingShopRegions )
             {
-                shopRegion.addShop( shop );
-            }
-        }
+                this.shopRegions.remove( overlappingShopRegion );
 
-        // resize the region after shops from all overlapping regions have been added
-        shopRegion.resize();
+                for ( Shop shop : overlappingShopRegion.shops )
+                {
+                    shopRegion.addShop( shop );
+                }
+            }
+
+            // resize the region after shops from all overlapping regions have been added
+            shopRegion.resize();
+        }
+        // check again for overlapping regions if one or more regions were merged
+        while ( !overlappingShopRegions.isEmpty() );
     }
 }
