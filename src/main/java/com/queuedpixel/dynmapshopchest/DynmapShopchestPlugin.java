@@ -99,6 +99,7 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
 
                 ShopRegion shopRegion = this.getShopRegion( shop );
                 shopRegion.addShop( shop );
+                shopRegion.resize();
                 this.checkOverlappingShopRegions( shopRegion );
             }
         }
@@ -259,5 +260,8 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
                 shopRegion.addShop( shop );
             }
         }
+
+        // resize the region after shops from all overlapping regions have been added
+        shopRegion.resize();
     }
 }

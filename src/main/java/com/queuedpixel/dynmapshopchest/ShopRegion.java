@@ -46,10 +46,9 @@ public class ShopRegion
     void addShop( Shop shop )
     {
         this.shops.add( shop );
-        this.resize();
     }
 
-    private void resize()
+    void resize()
     {
         // don't resize if there are no shops
         if ( this.shops.size() < 1 ) return;
