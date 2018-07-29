@@ -45,6 +45,10 @@ SOFTWARE.
             <url>http://repo.mikeprimm.com/</url>
         </repository>
         <repository>
+            <id>vault-repo</id>
+            <url>http://nexus.hc.to/content/repositories/pub_releases</url>
+        </repository>
+        <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io/</url>
         </repository>
@@ -67,6 +71,12 @@ SOFTWARE.
             <groupId>com.github.queuedpixel</groupId>
             <artifactId>ShopChest</artifactId>
             <version>queuedpixel-build-1.12.3-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.milkbowl.vault</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.6</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

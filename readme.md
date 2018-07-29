@@ -12,6 +12,7 @@ This plugin depends on the following plugins:
 
 * [Dynmap](https://www.spigotmc.org/resources/dynmap.274/)
 * [ShopChest](https://www.spigotmc.org/resources/shopchest.11431/)
+* [Vault](https://www.spigotmc.org/resources/vault.34315/)
 
 ## Installation
 

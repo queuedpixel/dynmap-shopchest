@@ -32,9 +32,12 @@ import de.epiceric.shopchest.language.LanguageUtils;
 import de.epiceric.shopchest.shop.Shop;
 import de.epiceric.shopchest.utils.ItemUtils;
 import de.epiceric.shopchest.utils.Utils;
+import net.milkbowl.vault.economy.Economy;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.dynmap.DynmapCommonAPI;
 import org.dynmap.markers.AreaMarker;
@@ -49,6 +52,7 @@ import java.util.UUID;
 
 public class DynmapShopchestPlugin extends JavaPlugin implements Listener
 {
+    private String formatString;
     private MarkerSet markerSet;
     private ShopChest shopChest;
     private Set< Location > locations = new HashSet<>();
@@ -56,6 +60,11 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
 
     public void onEnable()
     {
+        RegisteredServiceProvider< Economy > rsp =
+                        Bukkit.getServer().getServicesManager().getRegistration( Economy.class );
+        Economy economy = rsp.getProvider();
+        this.formatString = "%." + economy.fractionalDigits() + "f";
+
         this.shopChest = (ShopChest) this.getServer().getPluginManager().getPlugin( "ShopChest" );
         this.getServer().getPluginManager().registerEvents( this, this );
         DynmapCommonAPI dynmapApi = (DynmapCommonAPI) this.getServer().getPluginManager().getPlugin( "dynmap" );
@@ -133,8 +142,10 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
 
             for ( Shop shop : shopRegion.shops )
             {
-                String buyPrice = shop.getBuyPrice() == 0 ? "N/A" : Double.toString( shop.getBuyPrice() );
-                String sellPrice = shop.getSellPrice() == 0 ? "N/A" : Double.toString( shop.getSellPrice() );
+                String buyPrice =
+                        shop.getBuyPrice() == 0 ? "N/A" : String.format( this.formatString, shop.getBuyPrice() );
+                String sellPrice =
+                        shop.getSellPrice() == 0 ? "N/A" : String.format( this.formatString, shop.getSellPrice() );
                 String inventory = shop.getBuyPrice() == 0 ? "N/A" :
                         Integer.toString(
                                 Utils.getAmount( shop.getInventoryHolder().getInventory(), shop.getProduct() ));
