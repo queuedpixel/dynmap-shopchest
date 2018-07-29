@@ -119,6 +119,7 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
         for ( ShopRegion shopRegion : this.shopRegions )
         {
             StringBuilder builder = new StringBuilder();
+            builder.append( "<div style=\"overflow-y: auto; max-height: 75vh;\">" );
             builder.append( "<table style=\"border-collapse: collapse;\">" );
             builder.append( "<tr style=\"background-color: #FFFFFF; text-align: center;\">" );
             builder.append( "<th style=\"border-right: 1px solid black; text-align: left;\">" );
@@ -180,6 +181,7 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
             }
 
             builder.append( "</table>" );
+            builder.append( "</div>" );
 
             this.getLogger().info(
                     "Shop Region " +
