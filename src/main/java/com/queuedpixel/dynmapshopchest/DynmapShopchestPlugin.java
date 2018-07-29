@@ -145,12 +145,12 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
             {
                 Inventory inventory = shop.getInventoryHolder().getInventory();
                 String buyPrice =
-                        shop.getBuyPrice() == 0 ? "N/A" : String.format( this.formatString, shop.getBuyPrice() );
+                        shop.getBuyPrice() == 0 ? "" : String.format( this.formatString, shop.getBuyPrice() );
                 String sellPrice =
-                        shop.getSellPrice() == 0 ? "N/A" : String.format( this.formatString, shop.getSellPrice() );
-                String inventoryCount = shop.getBuyPrice() == 0 ? "N/A" :
+                        shop.getSellPrice() == 0 ? "" : String.format( this.formatString, shop.getSellPrice() );
+                String inventoryCount = shop.getBuyPrice() == 0 ? "" :
                         String.format( "%,d", Utils.getAmount( inventory, shop.getProduct() ));
-                String freeSpaceCount = shop.getSellPrice() == 0 ? "N/A" :
+                String freeSpaceCount = shop.getSellPrice() == 0 ? "" :
                         String.format( "%,d", Utils.getFreeSpaceForItem( inventory, shop.getProduct() ));
 
                 builder.append( "<tr>" );
