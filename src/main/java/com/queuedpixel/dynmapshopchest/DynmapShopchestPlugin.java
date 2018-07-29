@@ -119,8 +119,8 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
         for ( ShopRegion shopRegion : this.shopRegions )
         {
             StringBuilder builder = new StringBuilder();
-            builder.append( "<table>" );
-            builder.append( "<tr style=\"text-align: right;\">" );
+            builder.append( "<table style=\"border-collapse: collapse;\">" );
+            builder.append( "<tr style=\"background-color: #FFFFFF; text-align: right;\">" );
             builder.append( "<th style=\"text-align: left;\">" );
             builder.append( "Item" );
             builder.append( "</th>" );
@@ -141,8 +141,12 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
             builder.append( "</th>" );
             builder.append( "</tr>" );
 
+            boolean alternate = true;
             for ( Shop shop : shopRegion.shops )
             {
+                alternate = !alternate;
+                String bgColor = alternate ? "#AAAAAA" : "#DDDDDD";
+
                 Inventory inventory = shop.getInventoryHolder().getInventory();
                 String buyPrice =
                         shop.getBuyPrice() == 0 ? "" : String.format( this.formatString, shop.getBuyPrice() );
@@ -153,7 +157,7 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
                 String freeSpaceCount = shop.getSellPrice() == 0 ? "" :
                         String.format( "%,d", Utils.getFreeSpaceForItem( inventory, shop.getProduct() ));
 
-                builder.append( "<tr>" );
+                builder.append( "<tr style=\"background-color: " + bgColor+ ";\">" );
                 builder.append( "<td>" );
                 builder.append( LanguageUtils.getItemName( shop.getProduct() ));
                 builder.append( "</td>" );
