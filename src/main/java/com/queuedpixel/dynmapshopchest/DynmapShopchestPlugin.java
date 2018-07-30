@@ -158,7 +158,7 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
                 String freeSpaceCount = shop.getSellPrice() == 0 ? "" :
                         String.format( "%,d", Utils.getFreeSpaceForItem( inventory, shop.getProduct() ));
 
-                builder.append( "<tr style=\"background-color: " + bgColor+ ";\">" );
+                builder.append( "<tr style=\"background-color: " + bgColor + ";\">" );
                 builder.append( "<td style=\"border-right: 1px solid black; text-align: right; padding-right: 3px;\">" );
                 builder.append( LanguageUtils.getItemName( shop.getProduct() ));
                 builder.append( "</td>" );
