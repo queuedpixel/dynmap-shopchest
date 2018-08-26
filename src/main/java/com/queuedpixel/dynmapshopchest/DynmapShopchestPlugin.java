@@ -121,33 +121,59 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
         for ( ShopRegion shopRegion : this.shopRegions )
         {
             shopRegion.shops.sort( shopComparator );
+            String lastVendor = null;
+
             StringBuilder builder = new StringBuilder();
             builder.append( "<div style=\"overflow-y: auto; max-height: 75vh;\">" );
             builder.append( "<table style=\"border-collapse: collapse;\">" );
-            builder.append( "<tr style=\"background-color: #FFFFFF; text-align: center;\">" );
-            builder.append( "<th style=\"border-right: 1px solid black; text-align: left;\">" );
-            builder.append( "Item" );
-            builder.append( "</th>" );
-            builder.append( "<th style=\"border-right: 1px solid black;\">" );
-            builder.append( "Amt." );
-            builder.append( "</th>" );
-            builder.append( "<th style=\"border-right: 1px solid black;\">" );
-            builder.append( "Buy" );
-            builder.append( "</th>" );
-            builder.append( "<th style=\"border-right: 1px solid black;\">" );
-            builder.append( "#" );
-            builder.append( "</th>" );
-            builder.append( "<th style=\"border-right: 1px solid black;\">" );
-            builder.append( "Sell" );
-            builder.append( "</th>" );
-            builder.append( "<th>" );
-            builder.append( "#" );
-            builder.append( "</th>" );
-            builder.append( "</tr>" );
 
             boolean alternate = true;
             for ( Shop shop : shopRegion.shops )
             {
+                String currentVendor = shop.getShopType().equals( Shop.ShopType.ADMIN ) ?
+                        "<em>Admin Shop</em>" : shop.getVendor().getName();
+
+                if ( !currentVendor.equals( lastVendor ))
+                {
+                    if ( lastVendor != null )
+                    {
+                        builder.append( "<tr style=\"background-color: #FFFFFF; height: 1em;\">" );
+                        builder.append( "<td colspan=\"6\">" );
+                        builder.append( "</td>" );
+                        builder.append( "</tr>" );
+                    }
+
+                    builder.append( "<tr style=\"background-color: #FFFFFF;\">" );
+                    builder.append( "<td colspan=\"6\">" );
+                    builder.append( "<strong>Vendor:</strong> " );
+                    builder.append( currentVendor );
+                    builder.append( "</td>" );
+                    builder.append( "</tr>" );
+                    builder.append( "<tr style=\"background-color: #FFFFFF; text-align: center;\">" );
+                    builder.append( "<th style=\"border-right: 1px solid black; text-align: left;\">" );
+                    builder.append( "Item" );
+                    builder.append( "</th>" );
+                    builder.append( "<th style=\"border-right: 1px solid black;\">" );
+                    builder.append( "Amt." );
+                    builder.append( "</th>" );
+                    builder.append( "<th style=\"border-right: 1px solid black;\">" );
+                    builder.append( "Buy" );
+                    builder.append( "</th>" );
+                    builder.append( "<th style=\"border-right: 1px solid black;\">" );
+                    builder.append( "#" );
+                    builder.append( "</th>" );
+                    builder.append( "<th style=\"border-right: 1px solid black;\">" );
+                    builder.append( "Sell" );
+                    builder.append( "</th>" );
+                    builder.append( "<th>" );
+                    builder.append( "#" );
+                    builder.append( "</th>" );
+                    builder.append( "</tr>" );
+
+                    alternate = true;
+                    lastVendor = currentVendor;
+                }
+
                 alternate = !alternate;
                 String bgColor = alternate ? "#AAAAAA" : "#DDDDDD";
 

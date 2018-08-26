@@ -35,8 +35,21 @@ public class ShopComparator implements Comparator< Shop >
 {
     public int compare( Shop shop1, Shop shop2 )
     {
+        boolean adminShop1 = shop1.getShopType().equals( Shop.ShopType.ADMIN );
+        boolean adminShop2 = shop2.getShopType().equals( Shop.ShopType.ADMIN );
+
+        String vendor1 = shop1.getVendor().getName();
+        String vendor2 = shop2.getVendor().getName();
+
         String item1 = LanguageUtils.getItemName( shop1.getProduct() );
         String item2 = LanguageUtils.getItemName( shop2.getProduct() );
+
+        int adminShopResult = Boolean.compare( adminShop1, adminShop2 );
+        if ( adminShopResult != 0 ) return -adminShopResult; // negate the result since false sorts before true
+
+        int vendorResult = vendor1.compareTo( vendor2 );
+        if ( vendorResult != 0 ) return vendorResult;
+
         return item1.compareTo( item2 );
     }
 }
