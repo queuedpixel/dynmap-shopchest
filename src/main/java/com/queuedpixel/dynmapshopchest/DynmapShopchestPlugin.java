@@ -81,6 +81,8 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
     @EventHandler
     public void onShopInitializedEvent( ShopInitializedEvent event )
     {
+        ShopComparator shopComparator = new ShopComparator();
+
         for ( Shop shop : this.shopChest.getShopUtils().getShops() )
         {
             if ( !this.locations.contains( shop.getLocation() ))
@@ -118,6 +120,7 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
 
         for ( ShopRegion shopRegion : this.shopRegions )
         {
+            shopRegion.shops.sort( shopComparator );
             StringBuilder builder = new StringBuilder();
             builder.append( "<div style=\"overflow-y: auto; max-height: 75vh;\">" );
             builder.append( "<table style=\"border-collapse: collapse;\">" );

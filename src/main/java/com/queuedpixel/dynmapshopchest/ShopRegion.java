@@ -29,8 +29,8 @@ package com.queuedpixel.dynmapshopchest;
 import de.epiceric.shopchest.shop.Shop;
 import org.bukkit.Location;
 
-import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 public class ShopRegion
 {
@@ -41,7 +41,7 @@ public class ShopRegion
     int zTop;
     int xRight;
     int zBottom;
-    Collection< Shop > shops = new LinkedList<>();
+    List< Shop > shops = new LinkedList<>();
 
     void addShop( Shop shop )
     {
