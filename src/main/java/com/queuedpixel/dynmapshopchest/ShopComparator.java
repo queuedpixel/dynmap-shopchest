@@ -28,6 +28,7 @@ package com.queuedpixel.dynmapshopchest;
 
 import de.epiceric.shopchest.language.LanguageUtils;
 import de.epiceric.shopchest.shop.Shop;
+import de.epiceric.shopchest.utils.ItemUtils;
 
 import java.util.Comparator;
 
@@ -37,19 +38,21 @@ public class ShopComparator implements Comparator< Shop >
     {
         boolean adminShop1 = shop1.getShopType().equals( Shop.ShopType.ADMIN );
         boolean adminShop2 = shop2.getShopType().equals( Shop.ShopType.ADMIN );
-
-        String vendor1 = shop1.getVendor().getName();
-        String vendor2 = shop2.getVendor().getName();
-
-        String item1 = LanguageUtils.getItemName( shop1.getProduct() );
-        String item2 = LanguageUtils.getItemName( shop2.getProduct() );
-
         int adminShopResult = Boolean.compare( adminShop1, adminShop2 );
         if ( adminShopResult != 0 ) return -adminShopResult; // negate the result since false sorts before true
 
+        String vendor1 = shop1.getVendor().getName();
+        String vendor2 = shop2.getVendor().getName();
         int vendorResult = vendor1.compareTo( vendor2 );
         if ( vendorResult != 0 ) return vendorResult;
 
-        return item1.compareTo( item2 );
+        String item1 = LanguageUtils.getItemName( shop1.getProduct() );
+        String item2 = LanguageUtils.getItemName( shop2.getProduct() );
+        int itemResult = item1.compareTo( item2 );
+        if ( itemResult != 0 ) return itemResult;
+
+        String enchantments1 = LanguageUtils.getEnchantmentString( ItemUtils.getEnchantments( shop1.getProduct()) );
+        String enchantments2 = LanguageUtils.getEnchantmentString( ItemUtils.getEnchantments( shop2.getProduct()) );
+        return enchantments1.compareTo( enchantments2 );
     }
 }

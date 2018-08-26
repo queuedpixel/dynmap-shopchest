@@ -35,6 +35,7 @@ import de.epiceric.shopchest.utils.Utils;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
@@ -48,6 +49,7 @@ import org.dynmap.markers.MarkerSet;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -191,7 +193,19 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
 
                 builder.append( "<tr style=\"background-color: " + bgColor + ";\">" );
                 builder.append( "<td style=\"border-right: 1px solid black; text-align: right; padding-right: 3px;\">" );
+                builder.append( "<strong>" );
                 builder.append( LanguageUtils.getItemName( shop.getProduct() ));
+                builder.append( "</strong>" );
+
+                Map< Enchantment, Integer > enchantments = ItemUtils.getEnchantments( shop.getProduct() );
+                for ( Enchantment enchantment : enchantments.keySet() )
+                {
+                    builder.append( "<br>" );
+                    builder.append( "<em>" );
+                    builder.append( LanguageUtils.getEnchantmentName( enchantment, enchantments.get( enchantment )));
+                    builder.append( "</em>" );
+                }
+
                 builder.append( "</td>" );
                 builder.append( "<td style=\"border-right: 1px solid black; text-align: right; padding-left: 3px; padding-right: 3px;\">" );
                 builder.append( shop.getProduct().getAmount() );
