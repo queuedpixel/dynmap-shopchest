@@ -59,6 +59,7 @@ public class UpdateShopsTask extends BukkitRunnable
     private ShopComparator shopComparator = new ShopComparator();
     private Collection< ShopRegion > shopRegions = new LinkedList<>();
     private MarkerSet markerSet = null;
+    private Collection< AreaMarker > areaMarkers = new LinkedList<>();
 
     UpdateShopsTask( DynmapShopchestPlugin plugin )
     {
@@ -74,9 +75,21 @@ public class UpdateShopsTask extends BukkitRunnable
 
     public void run()
     {
-        if ( this.markerSet != null ) this.markerSet.deleteMarkerSet();
-        this.markerSet = markerApi.createMarkerSet( "DynmapShopchest", "Shops", null, false );
-        this.markerSet.setLayerPriority( 10 );
+        if ( this.markerSet != null )
+        {
+            for ( AreaMarker areaMarker : this.areaMarkers )
+            {
+                areaMarker.deleteMarker();
+            }
+
+            this.shopRegions.clear();
+            this.areaMarkers.clear();
+        }
+        else
+        {
+            this.markerSet = markerApi.createMarkerSet( "DynmapShopchest", "Shops", null, false );
+            this.markerSet.setLayerPriority( 10 );
+        }
 
         Set< Location > locations = new HashSet<>();
 
@@ -238,6 +251,7 @@ public class UpdateShopsTask extends BukkitRunnable
                     new double[] { shopRegion.zTop, shopRegion.zBottom, shopRegion.zBottom, shopRegion.zTop }, false );
             area.setLineStyle( 3, 0.75, 0x00FFFF );
             area.setFillStyle( 0.25, 0x00FFFF );
+            this.areaMarkers.add( area );
         }
     }
 
