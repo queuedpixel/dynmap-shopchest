@@ -75,6 +75,24 @@ public class UpdateShopsTask extends BukkitRunnable
 
     public void run()
     {
+        String whiteBackgroundStyle = "background-color: #FFFFFF;";
+        String borderStyle          = "border-right: 1px solid black;";
+        String textAlignLeftStyle   = "text-align: left;";
+        String textAlignCenterStyle = "text-align: center;";
+        String textAlignRightStyle  = "text-align: right;";
+        String paddingLeftStyle     = "padding-left: 3px;";
+        String paddingRightStyle    = "padding-right: 3px;";
+        String paddingBothStyle     = paddingLeftStyle + " " + paddingRightStyle;
+
+        String divStyle        = "overflow-y: auto; max-height: 75vh;";
+        String tableStyle      = "border-collapse: collapse;";
+        String paddingRowStyle = whiteBackgroundStyle + " height: 1em;";
+        String headerRowStyle  = whiteBackgroundStyle + " " + textAlignCenterStyle + ";";
+        String itemHeaderStyle = borderStyle + " " + textAlignLeftStyle + ";";
+        String leftItemStyle   = borderStyle + " " + textAlignRightStyle + " " + paddingRightStyle;
+        String middleItemStyle = borderStyle + " " + textAlignRightStyle + " " + paddingBothStyle;
+        String rightItemStyle  = textAlignRightStyle + " " + paddingLeftStyle;
+
         if ( this.markerSet != null )
         {
             for ( AreaMarker areaMarker : this.areaMarkers )
@@ -111,8 +129,8 @@ public class UpdateShopsTask extends BukkitRunnable
             String lastVendor = null;
 
             StringBuilder builder = new StringBuilder();
-            builder.append( "<div style=\"overflow-y: auto; max-height: 75vh;\">" );
-            builder.append( "<table style=\"border-collapse: collapse;\">" );
+            builder.append( "<div style=\"" + divStyle + "\">" );
+            builder.append( "<table style=\"" + tableStyle + "\">" );
 
             boolean alternate = true;
             for ( Shop shop : shopRegion.shops )
@@ -124,32 +142,32 @@ public class UpdateShopsTask extends BukkitRunnable
                 {
                     if ( lastVendor != null )
                     {
-                        builder.append( "<tr style=\"background-color: #FFFFFF; height: 1em;\">" );
+                        builder.append( "<tr style=\"" + paddingRowStyle + "\">" );
                         builder.append( "<td colspan=\"6\">" );
                         builder.append( "</td>" );
                         builder.append( "</tr>" );
                     }
 
-                    builder.append( "<tr style=\"background-color: #FFFFFF;\">" );
+                    builder.append( "<tr style=\"" + whiteBackgroundStyle + "\">" );
                     builder.append( "<td colspan=\"6\">" );
                     builder.append( "<strong>Vendor:</strong> " );
                     builder.append( currentVendor );
                     builder.append( "</td>" );
                     builder.append( "</tr>" );
-                    builder.append( "<tr style=\"background-color: #FFFFFF; text-align: center;\">" );
-                    builder.append( "<th style=\"border-right: 1px solid black; text-align: left;\">" );
+                    builder.append( "<tr style=\"" + headerRowStyle + "\">" );
+                    builder.append( "<th style=\"" + itemHeaderStyle + "\">" );
                     builder.append( "Item" );
                     builder.append( "</th>" );
-                    builder.append( "<th style=\"border-right: 1px solid black;\">" );
+                    builder.append( "<th style=\"" + borderStyle + "\">" );
                     builder.append( "Amt." );
                     builder.append( "</th>" );
-                    builder.append( "<th style=\"border-right: 1px solid black;\">" );
+                    builder.append( "<th style=\"" + borderStyle + "\">" );
                     builder.append( "Buy" );
                     builder.append( "</th>" );
-                    builder.append( "<th style=\"border-right: 1px solid black;\">" );
+                    builder.append( "<th style=\"" + borderStyle + "\">" );
                     builder.append( "#" );
                     builder.append( "</th>" );
-                    builder.append( "<th style=\"border-right: 1px solid black;\">" );
+                    builder.append( "<th style=\"" + borderStyle + "\">" );
                     builder.append( "Sell" );
                     builder.append( "</th>" );
                     builder.append( "<th>" );
@@ -162,7 +180,7 @@ public class UpdateShopsTask extends BukkitRunnable
                 }
 
                 alternate = !alternate;
-                String bgColor = alternate ? "#AAAAAA" : "#DDDDDD";
+                String backgroundStyle = "background-color: " + ( alternate ? "#AAAAAA" : "#DDDDDD" ) + ";";
 
                 Inventory inventory = shop.getInventoryHolder().getInventory();
                 String buyPrice =
@@ -176,8 +194,8 @@ public class UpdateShopsTask extends BukkitRunnable
                         shop.getShopType().equals( Shop.ShopType.ADMIN ) ? "∞" :
                                 String.format( "%,d", Utils.getFreeSpaceForItem( inventory, shop.getProduct() ));
 
-                builder.append( "<tr style=\"background-color: " + bgColor + ";\">" );
-                builder.append( "<td style=\"border-right: 1px solid black; text-align: right; padding-right: 3px;\">" );
+                builder.append( "<tr style=\"" + backgroundStyle + "\">" );
+                builder.append( "<td style=\"" + leftItemStyle + "\">" );
                 builder.append( "<strong>" );
                 builder.append( LanguageUtils.getItemName( shop.getProduct() ));
                 builder.append( "</strong>" );
@@ -192,19 +210,19 @@ public class UpdateShopsTask extends BukkitRunnable
                 }
 
                 builder.append( "</td>" );
-                builder.append( "<td style=\"border-right: 1px solid black; text-align: right; padding-left: 3px; padding-right: 3px;\">" );
+                builder.append( "<td style=\"" + middleItemStyle + "\">" );
                 builder.append( shop.getProduct().getAmount() );
                 builder.append( "</td>" );
-                builder.append( "<td style=\"border-right: 1px solid black; text-align: right; padding-left: 3px; padding-right: 3px;\">" );
+                builder.append( "<td style=\"" + middleItemStyle + "\">" );
                 builder.append( buyPrice );
                 builder.append( "</td>" );
-                builder.append( "<td style=\"border-right: 1px solid black; text-align: right; padding-left: 3px; padding-right: 3px;\">" );
+                builder.append( "<td style=\"" + middleItemStyle + "\">" );
                 builder.append( inventoryCount );
                 builder.append( "</td>" );
-                builder.append( "<td style=\"border-right: 1px solid black; text-align: right; padding-left: 3px; padding-right: 3px;\">" );
+                builder.append( "<td style=\"" + middleItemStyle + "\">" );
                 builder.append( sellPrice );
                 builder.append( "</td>" );
-                builder.append( "<td style=\"text-align: right; padding-left: 3px;\">" );
+                builder.append( "<td style=\"" + rightItemStyle + "\">" );
                 builder.append( freeSpaceCount );
                 builder.append( "</td>" );
                 builder.append( "</tr>" );
