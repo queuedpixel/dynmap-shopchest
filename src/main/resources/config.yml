@@ -1,0 +1,68 @@
+# dynmap-shopchest : Display ShopChest Shops on Dynmap
+#
+# Copyright (c) 2018 Queued Pixel <git@queuedpixel.com>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+# Configuration File for DynmapShopchest
+
+# Description: Time interval (in seconds) between refreshing the shop information on Dynmap.
+# Data Type: long
+# Default Value: one hour (3,600 seconds)
+refreshInterval: 3600
+
+# Description: Padding (in blocks) between region border and shops.
+# Data Type: int
+# Default Value: 5
+regionPadding: 5
+
+# Description: Name of the shop layer on Dynmap.
+# Data Type: string
+# Default Value: Shops
+layerName: Shops
+
+# Description: Ordering priority in layer menu of the shop layer on Dynmap (low goes before high).
+# Data Type: int
+# Default Value: 10
+layerPriority: 10
+
+# Description: Width of the line drawn around shop regions.
+# Data Type: int
+# Default Value: 3
+lineWidth: 3
+
+# Description: Opacity of the line drawn around shop regions.
+# Data Type: double
+# Default Value: 0.75
+lineOpacity: 0.75
+
+# Description: Color of the line drawn around shop regions.
+# Data Type: int
+# Default Value: 0x00FFFF
+lineColor: 0x00FFFF
+
+# Description: Opacity of shop regions.
+# Data Type: double
+# Default Value: 0.25
+fillOpacity: 0.25
+
+# Description: Color of shop regions.
+# Data Type: int
+# Default Value: 0x00FFFF
+fillColor: 0x00FFFF

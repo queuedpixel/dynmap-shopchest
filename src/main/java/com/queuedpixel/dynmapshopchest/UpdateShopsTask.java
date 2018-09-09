@@ -105,8 +105,9 @@ public class UpdateShopsTask extends BukkitRunnable
         }
         else
         {
-            this.markerSet = markerApi.createMarkerSet( "DynmapShopchest", "Shops", null, false );
-            this.markerSet.setLayerPriority( 10 );
+            this.markerSet = markerApi.createMarkerSet(
+                    "DynmapShopchest", this.plugin.getConfig().getString( "layerName" ), null, false );
+            this.markerSet.setLayerPriority( this.plugin.getConfig().getInt( "layerPriority" ));
         }
 
         Set< Location > locations = new HashSet<>();
@@ -235,8 +236,13 @@ public class UpdateShopsTask extends BukkitRunnable
                     UUID.randomUUID().toString(), builder.toString(), true, shopRegion.world,
                     new double[] { shopRegion.xLeft, shopRegion.xLeft, shopRegion.xRight, shopRegion.xRight },
                     new double[] { shopRegion.zTop, shopRegion.zBottom, shopRegion.zBottom, shopRegion.zTop }, false );
-            areaMarker.setLineStyle( 3, 0.75, 0x00FFFF );
-            areaMarker.setFillStyle( 0.25, 0x00FFFF );
+            areaMarker.setLineStyle(
+                    this.plugin.getConfig().getInt(    "lineWidth"   ),
+                    this.plugin.getConfig().getDouble( "lineOpacity" ),
+                    this.plugin.getConfig().getInt(    "lineColor"   ));
+            areaMarker.setFillStyle(
+                    this.plugin.getConfig().getDouble( "fillOpacity" ),
+                    this.plugin.getConfig().getInt(    "fillColor"   ));
             this.areaMarkers.add( areaMarker );
         }
     }

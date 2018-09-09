@@ -35,6 +35,8 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
 {
     public void onEnable()
     {
+        this.saveDefaultConfig();
+        ShopRegion.regionPadding = this.getConfig().getInt( "regionPadding" );
         this.getServer().getPluginManager().registerEvents( this, this );
     }
 
@@ -45,7 +47,7 @@ public class DynmapShopchestPlugin extends JavaPlugin implements Listener
     @EventHandler
     public void onShopInitializedEvent( ShopInitializedEvent event )
     {
-        int updateInterval = 3600 * 20; // 1 hour times 20 ticks per second
+        long updateInterval = this.getConfig().getLong( "refreshInterval" ) * 20; // 20 ticks per second
         UpdateShopsTask updateShopsTask = new UpdateShopsTask( this );
         updateShopsTask.runTaskTimer( this, 0, updateInterval );
     }

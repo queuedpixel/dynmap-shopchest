@@ -34,7 +34,7 @@ import java.util.List;
 
 public class ShopRegion
 {
-    private static final int regionPadding = 5; // padding between region border and shops; blocks
+    static int regionPadding = 0; // padding (in blocks) between region border and shops
 
     String world;
     int xLeft;
