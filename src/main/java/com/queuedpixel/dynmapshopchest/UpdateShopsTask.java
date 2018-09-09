@@ -98,35 +98,12 @@ public class UpdateShopsTask extends BukkitRunnable
             if ( !locations.contains( shop.getLocation() ))
             {
                 locations.add( shop.getLocation() );
-
-                String enchantments =
-                        LanguageUtils.getEnchantmentString( ItemUtils.getEnchantments( shop.getProduct()) );
-                int inventory = Utils.getAmount( shop.getInventoryHolder().getInventory(), shop.getProduct() );
-                int freeSpace = Utils.getFreeSpaceForItem( shop.getInventoryHolder().getInventory(), shop.getProduct() );
-                this.plugin.getLogger().info(
-                        "Shop " +
-                        "- world: "        + shop.getLocation().getWorld().getName() +
-                        ", x: "            + shop.getLocation().getBlockX() +
-                        ", y: "            + shop.getLocation().getBlockY() +
-                        ", z: "            + shop.getLocation().getBlockZ() +
-                        ", type: "         + shop.getShopType() +
-                        ", vendor: "       + shop.getVendor().getName() +
-                        ", item: "         + LanguageUtils.getItemName( shop.getProduct() ) +
-                        ", enchantments: " + enchantments +
-                        ", amount: "       + shop.getProduct().getAmount() +
-                        ", buy price: "    + shop.getBuyPrice() +
-                        ", sell price: "   + shop.getSellPrice() +
-                        ", inventory: "    + inventory +
-                        ", free space: "   + freeSpace );
-
                 ShopRegion shopRegion = this.getShopRegion( shop );
                 shopRegion.addShop( shop );
                 shopRegion.resize();
                 this.checkOverlappingShopRegions( shopRegion );
             }
         }
-
-        this.plugin.getLogger().info( "Regions:" );
 
         for ( ShopRegion shopRegion : this.shopRegions )
         {
@@ -235,15 +212,6 @@ public class UpdateShopsTask extends BukkitRunnable
 
             builder.append( "</table>" );
             builder.append( "</div>" );
-
-            this.plugin.getLogger().info(
-                    "Shop Region " +
-                    "- world: "    + shopRegion.world +
-                    ", xLeft: "    + shopRegion.xLeft +
-                    ", zTop: "     + shopRegion.zTop +
-                    ", xRight: "   + shopRegion.xRight +
-                    ", zBottom: "  + shopRegion.zBottom +
-                    ", count: "    + shopRegion.shops.size() );
 
             AreaMarker areaMarker = this.markerSet.createAreaMarker(
                     UUID.randomUUID().toString(), builder.toString(), true, shopRegion.world,
