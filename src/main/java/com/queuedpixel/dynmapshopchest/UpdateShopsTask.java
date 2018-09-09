@@ -245,13 +245,13 @@ public class UpdateShopsTask extends BukkitRunnable
                     ", zBottom: "  + shopRegion.zBottom +
                     ", count: "    + shopRegion.shops.size() );
 
-            AreaMarker area = this.markerSet.createAreaMarker(
+            AreaMarker areaMarker = this.markerSet.createAreaMarker(
                     UUID.randomUUID().toString(), builder.toString(), true, shopRegion.world,
                     new double[] { shopRegion.xLeft, shopRegion.xLeft, shopRegion.xRight, shopRegion.xRight },
                     new double[] { shopRegion.zTop, shopRegion.zBottom, shopRegion.zBottom, shopRegion.zTop }, false );
-            area.setLineStyle( 3, 0.75, 0x00FFFF );
-            area.setFillStyle( 0.25, 0x00FFFF );
-            this.areaMarkers.add( area );
+            areaMarker.setLineStyle( 3, 0.75, 0x00FFFF );
+            areaMarker.setFillStyle( 0.25, 0x00FFFF );
+            this.areaMarkers.add( areaMarker );
         }
     }
 
