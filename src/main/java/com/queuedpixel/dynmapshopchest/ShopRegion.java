@@ -32,7 +32,7 @@ import org.bukkit.Location;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ShopRegion
+class ShopRegion
 {
     static int regionPadding = 0; // padding (in blocks) between region border and shops
 

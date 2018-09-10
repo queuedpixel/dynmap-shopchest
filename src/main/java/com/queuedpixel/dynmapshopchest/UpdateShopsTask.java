@@ -130,8 +130,8 @@ public class UpdateShopsTask extends BukkitRunnable
             String lastVendor = null;
 
             StringBuilder builder = new StringBuilder();
-            builder.append( "<div style=\"" + divStyle + "\">" );
-            builder.append( "<table style=\"" + tableStyle + "\">" );
+            builder.append( "<div style=\"" ).append( divStyle ).append( "\">" );
+            builder.append( "<table style=\"" ).append( tableStyle ).append( "\">" );
 
             boolean alternate = true;
             for ( Shop shop : shopRegion.shops )
@@ -143,32 +143,32 @@ public class UpdateShopsTask extends BukkitRunnable
                 {
                     if ( lastVendor != null )
                     {
-                        builder.append( "<tr style=\"" + paddingRowStyle + "\">" );
+                        builder.append( "<tr style=\"" ).append( paddingRowStyle ).append( "\">" );
                         builder.append( "<td colspan=\"6\">" );
                         builder.append( "</td>" );
                         builder.append( "</tr>" );
                     }
 
-                    builder.append( "<tr style=\"" + whiteBackgroundStyle + "\">" );
+                    builder.append( "<tr style=\"" ).append( whiteBackgroundStyle ).append( "\">" );
                     builder.append( "<td colspan=\"6\">" );
                     builder.append( "<strong>Vendor:</strong> " );
                     builder.append( currentVendor );
                     builder.append( "</td>" );
                     builder.append( "</tr>" );
-                    builder.append( "<tr style=\"" + headerRowStyle + "\">" );
-                    builder.append( "<th style=\"" + itemHeaderStyle + "\">" );
+                    builder.append( "<tr style=\"" ).append( headerRowStyle ).append( "\">" );
+                    builder.append( "<th style=\"" ).append( itemHeaderStyle ).append( "\">" );
                     builder.append( "Item" );
                     builder.append( "</th>" );
-                    builder.append( "<th style=\"" + borderStyle + "\">" );
+                    builder.append( "<th style=\"" ).append( borderStyle ).append( "\">" );
                     builder.append( "Amt." );
                     builder.append( "</th>" );
-                    builder.append( "<th style=\"" + borderStyle + "\">" );
+                    builder.append( "<th style=\"" ).append( borderStyle ).append( "\">" );
                     builder.append( "Buy" );
                     builder.append( "</th>" );
-                    builder.append( "<th style=\"" + borderStyle + "\">" );
+                    builder.append( "<th style=\"" ).append( borderStyle ).append( "\">" );
                     builder.append( "#" );
                     builder.append( "</th>" );
-                    builder.append( "<th style=\"" + borderStyle + "\">" );
+                    builder.append( "<th style=\"" ).append( borderStyle ).append( "\">" );
                     builder.append( "Sell" );
                     builder.append( "</th>" );
                     builder.append( "<th>" );
@@ -195,8 +195,8 @@ public class UpdateShopsTask extends BukkitRunnable
                         shop.getShopType().equals( Shop.ShopType.ADMIN ) ? "∞" :
                                 String.format( "%,d", Utils.getFreeSpaceForItem( inventory, shop.getProduct() ));
 
-                builder.append( "<tr style=\"" + backgroundStyle + "\">" );
-                builder.append( "<td style=\"" + leftItemStyle + "\">" );
+                builder.append( "<tr style=\"" ).append( backgroundStyle ).append( "\">" );
+                builder.append( "<td style=\"" ).append( leftItemStyle ).append( "\">" );
                 builder.append( "<strong>" );
                 builder.append( LanguageUtils.getItemName( shop.getProduct() ));
                 builder.append( "</strong>" );
@@ -211,19 +211,19 @@ public class UpdateShopsTask extends BukkitRunnable
                 }
 
                 builder.append( "</td>" );
-                builder.append( "<td style=\"" + middleItemStyle + "\">" );
+                builder.append( "<td style=\"" ).append( middleItemStyle ).append( "\">" );
                 builder.append( shop.getProduct().getAmount() );
                 builder.append( "</td>" );
-                builder.append( "<td style=\"" + middleItemStyle + "\">" );
+                builder.append( "<td style=\"" ).append( middleItemStyle ).append( "\">" );
                 builder.append( buyPrice );
                 builder.append( "</td>" );
-                builder.append( "<td style=\"" + middleItemStyle + "\">" );
+                builder.append( "<td style=\"" ).append( middleItemStyle ).append( "\">" );
                 builder.append( inventoryCount );
                 builder.append( "</td>" );
-                builder.append( "<td style=\"" + middleItemStyle + "\">" );
+                builder.append( "<td style=\"" ).append( middleItemStyle ).append( "\">" );
                 builder.append( sellPrice );
                 builder.append( "</td>" );
-                builder.append( "<td style=\"" + rightItemStyle + "\">" );
+                builder.append( "<td style=\"" ).append( rightItemStyle ).append( "\">" );
                 builder.append( freeSpaceCount );
                 builder.append( "</td>" );
                 builder.append( "</tr>" );
@@ -292,8 +292,7 @@ public class UpdateShopsTask extends BukkitRunnable
                          // both left and right X of this region are inside other region
                          (( otherShopRegion.xLeft  <= shopRegion.xLeft  ) &&
                           ( otherShopRegion.xRight >= shopRegion.xLeft  ) &&
-                          ( otherShopRegion.xLeft  <= shopRegion.xRight ) &&
-                          ( otherShopRegion.xRight >= shopRegion.xRight )));
+                          ( otherShopRegion.xLeft  <= shopRegion.xRight )));
 
                 boolean zOverlap =
                         // top Z of other region is inside this region
@@ -307,8 +306,7 @@ public class UpdateShopsTask extends BukkitRunnable
                          // both top and bottom Z of this region are inside other region
                          (( otherShopRegion.zTop    <= shopRegion.zTop    ) &&
                           ( otherShopRegion.zBottom >= shopRegion.zTop    ) &&
-                          ( otherShopRegion.zTop    <= shopRegion.zBottom ) &&
-                          ( otherShopRegion.zBottom >= shopRegion.zBottom )));
+                          ( otherShopRegion.zTop    <= shopRegion.zBottom )));
 
                 // two regions overlap if they overlap in the both the X and the Z dimension, and are in the same world
                 if (( xOverlap ) && ( zOverlap ) && ( shopRegion.world.equals( otherShopRegion.world )))
