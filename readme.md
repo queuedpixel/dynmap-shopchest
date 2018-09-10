@@ -2,10 +2,6 @@
 
 Display ShopChest Shops on Dynmap
 
-## Under Development
-
-This plugin is under development and is not ready for use.
-
 ## Dependencies
 
 This plugin depends on the following plugins:
